@@ -111,10 +111,11 @@ public class MainActivity extends AppCompatActivity implements
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
-            finish();
-        }
+        // commented out to work with emulator
+        //if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+        //    Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
+        //   finish();
+        //}
 
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
@@ -123,12 +124,23 @@ public class MainActivity extends AppCompatActivity implements
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
         // Checks if Bluetooth is supported on the device.
+<<<<<<< HEAD
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
         //Button click callbacks
+=======
+        // commented out to work with emulator
+        //if (mBluetoothAdapter == null) {
+        //    Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
+        //    finish();
+        //    return;
+        //}
+
+ /*       Button click callbacks
+>>>>>>> b34aba974023818799e62cffa49ee9b9ee2f7335
         mPrevButton = (ImageButton) findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
