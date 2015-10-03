@@ -2,6 +2,7 @@ package tempo.tempo;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,13 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.spotify.sdk.android.player.Spotify;
 
@@ -43,6 +50,8 @@ import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements
         PlayerNotificationCallback, ConnectionStateCallback {
@@ -340,6 +349,50 @@ public class MainActivity extends AppCompatActivity implements
         // VERY IMPORTANT! This must always be called or else you will leak resources
         Spotify.destroyPlayer(this);
         super.onDestroy();
+    }
+
+    public class AsynchronousNetworkTask extends AsyncTask<String, Void, JSONObject> {
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            String artist = params[0];
+            String song = params[1];
+
+            String url = "http://developer.echonest.com/api/v4/song/search?api_key=B8YFO8YFTNJITHGWH&artist=";
+            String urlDelimiter = "%20";
+
+            Scanner artistScanner = new Scanner(artist);
+
+            while(artistScanner.hasNext()){
+                url = url + artistScanner.next() + urlDelimiter;
+            }
+
+            url.substring(0, url.length() - 3);
+
+            url = url + "&title=";
+
+            Scanner songScanner = new Scanner(song);
+
+            while(songScanner.hasNext()){
+                url = url + songScanner.next() + urlDelimiter;
+            }
+
+            url.substring(0, url.length() - 3);
+
+            URL songInfoUrl = null;
+            try{
+                songInfoUrl = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) songInfoUrl.openConnection();
+            }
+            catch(MalformedURLException e){
+
+            }
+            catch(IOException e){
+                
+            }
+
+
+        }
     }
 
 }
