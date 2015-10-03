@@ -64,13 +64,13 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity implements
         PlayerNotificationCallback, ConnectionStateCallback {
 
-//    private ImageButton mPrevButton;
-  //  private ImageButton mPlayPauseButton;
+    private ImageButton mPrevButton;
+    private ImageButton mPlayPauseButton;
     private int mCurrentImageID;
- //   private ImageButton mNextButton;
+    private ImageButton mNextButton;
     private Button mRestButton;
 
-//    private Button mHamButton;
+    private Button mHamButton;
 
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
@@ -116,10 +116,11 @@ public class MainActivity extends AppCompatActivity implements
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
-            finish();
-        }
+        // commented out to work with emulator
+        //if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+        //    Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
+        //   finish();
+        //}
 
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
@@ -128,13 +129,23 @@ public class MainActivity extends AppCompatActivity implements
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
         // Checks if Bluetooth is supported on the device.
+<<<<<<< HEAD
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
+        //Button click callbacks
+=======
+        // commented out to work with emulator
+        //if (mBluetoothAdapter == null) {
+        //    Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
+        //    finish();
+        //    return;
+        //}
 
  /*       Button click callbacks
+>>>>>>> b34aba974023818799e62cffa49ee9b9ee2f7335
         mPrevButton = (ImageButton) findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,9 +153,9 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
-  */
 
-   /*     mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
+
+        mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
         mCurrentImageID = R.drawable.play_button;
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (mCurrentImageID == R.drawable.play_button){
                     mPlayPauseButton.setImageResource(R.drawable.pause_button);
                     mCurrentImageID = R.drawable.pause_button;
+                    mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
                 }
                 else{
                     mPlayPauseButton.setImageResource(R.drawable.play_button);
@@ -167,10 +179,10 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
 
             }
-        }); */
+        });
 
         mRestButton = (Button) findViewById(R.id.rest_button);
-        //mHamButton = (Button) findViewById(R.id.ham_button);
+
     }
 
     @Override
@@ -216,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements
                         public void onInitialized(Player player) {
                             mPlayer.addConnectionStateCallback(MainActivity.this);
                             mPlayer.addPlayerNotificationCallback(MainActivity.this);
-                            mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
+                            //mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
                         }
 
                         @Override
