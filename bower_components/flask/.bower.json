@@ -1,35 +1,15 @@
 {
   "name": "flask",
-  "version": "0.2.5",
-  "authors": [
-    "Jarad Light (https://github.com/jaradlight)"
-  ],
-  "description": "Helper files for Sass projects.",
-  "main": "sass/_flask.scss",
-  "keywords": [
-    "css",
-    "sass",
-    "utility"
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/jaradlight/flask",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests",
-    "sassdoc",
-    "package.json"
-  ],
-  "_release": "0.2.5",
+  "homepage": "https://github.com/mitsuhiko/flask",
+  "version": "0.10.1",
+  "_release": "0.10.1",
   "_resolution": {
     "type": "version",
-    "tag": "0.2.5",
-    "commit": "56517d7dd461c74e543c077b0a765e2b5b6152c1"
+    "tag": "0.10.1",
+    "commit": "298334fffc8288b5a9a45ef4150e3c4292e45318"
   },
-  "_source": "git://github.com/jaradlight/flask.git",
-  "_target": "~0.2.5",
-  "_originalSource": "flask",
+  "_source": "https://github.com/mitsuhiko/flask.git",
+  "_target": "~0.10.1",
+  "_originalSource": "https://github.com/mitsuhiko/flask.git",
   "_direct": true
 }
