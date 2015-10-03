@@ -51,6 +51,14 @@
         android:layout_marginLeft="50px"
         android:layout_marginRight="50px"
         android:paddingTop="50px"
+        android:paddingBottom="50px"
         />
+
+    <Button
+        android:id="@+id/rest_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REST"
+        android:layout_gravity="center_horizontal|bottom"/>
 
 </LinearLayout>

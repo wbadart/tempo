@@ -1,8 +1,10 @@
 package tempo.tempo;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,14 +12,24 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 
+import com.spotify.sdk.android.authentication.AuthenticationClient;
+import com.spotify.sdk.android.authentication.AuthenticationRequest;
+import com.spotify.sdk.android.authentication.AuthenticationResponse;
+
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton mPrevButton;
     private ImageButton mPlayPauseButton;
     private int mCurrentImageID;
     private ImageButton mNextButton;
+    private Button mRestButton;
 
     private SeekBar mIntensityBar;
+
+    // Request code will be used to verify if result comes from the login activity. Can be set to any integer.
+    private static final String CLIENT_ID = ""; //ClientId goes here
+    private static final int REQUEST_CODE = 6203;
+    private static final String REDIRECT_URI = "tempo-app://callback";
 
 
     @Override
@@ -25,6 +37,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("MainActivity", "Authenticating..");
+        //Handle Spotify authentication
+        AuthenticationRequest.Builder builder =
+                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+
+        builder.setScopes(new String[]{"user-read-private", "streaming"});
+        AuthenticationRequest request = builder.build();
+
+        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+
+        //Button click callbacks
         mPrevButton = (ImageButton) findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mRestButton = (Button) findViewById(R.id.rest_button);
+
     }
 
     @Override
@@ -80,5 +105,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check if result comes from the correct activity
+        if (requestCode == REQUEST_CODE) {
+            AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, data);
+
+            switch (response.getType()) {
+                // Response was successful and contains auth token
+                case TOKEN:
+                    // Handle successful response
+                    break;
+
+                // Auth flow returned an error
+                case ERROR:
+                    // Handle error response
+                    break;
+
+                // Most likely auth flow was cancelled
+                default:
+                    // Handle other cases
+            }
+        }
     }
 }
