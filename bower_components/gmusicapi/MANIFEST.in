@@ -1,0 +1,8 @@
+include HISTORY.rst LICENSE example.py README.rst
+recursive-include gmusicapi *.py
+include docs/Makefile
+recursive-include docs/source *.py *.rst
+include gmusicapi/test/audiotest*
+include gmusicapi/test/imagetest*
+include gmusicapi/test/*.jsarray
+global-exclude _local_*.py
