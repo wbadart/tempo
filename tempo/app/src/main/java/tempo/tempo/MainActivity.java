@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new HttpPostExample().execute();
         Log.d("MainActivity", "Authenticating..");
 
         //Handle Spotify authentication
@@ -429,6 +430,31 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             return Double.parseDouble(songTempo);
+
+        }
+
+    }
+
+    public class HttpPostExample extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+
+            try{
+                URL url = new URL("52.89.129.24:80");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                OutputStream os = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(4);
+                connection.connect();
+                Log.d(TAG, "Example works");
+            }
+            catch(Exception e){
+
+            }
+
+            return 0;
 
         }
 
