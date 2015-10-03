@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private int mCurrentImageID;
     private ImageButton mNextButton;
     private Button mRestButton;
+
+    private Button mHamButton;
+
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
 
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mRestButton = (Button) findViewById(R.id.rest_button);
-
+        mHamButton = (Button) findViewById(R.id.ham_button);
     }
 
     @Override
