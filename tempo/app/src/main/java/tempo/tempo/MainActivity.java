@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity implements
             Scanner rd = new Scanner(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = null;
             while(rd.hasNextLine()){
-                jsonText = rd.nextLine();
+                jsonText = jsonText + rd.nextLine();
             }
             JSONObject json = new JSONObject(jsonText);
             return json;
