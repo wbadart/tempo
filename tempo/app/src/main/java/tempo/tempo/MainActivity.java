@@ -452,17 +452,19 @@ public class MainActivity extends AppCompatActivity implements
         protected Integer doInBackground(Void... params) {
 
             try{
-                URL url = new URL("52.89.129.24:80");
+                URL url = new URL("http://52.89.129.24:80");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                connection.connect();
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
                 writer.write(4);
-                connection.connect();
                 Log.d(TAG, "Example works");
             }
             catch(Exception e){
-
+                Log.d(TAG, e.getMessage());
             }
 
             return 0;
