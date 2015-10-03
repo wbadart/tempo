@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements
     private ImageButton mNextButton;
     private Button mRestButton;
 
-    private Button mHamButton;
-
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
 
@@ -124,14 +122,8 @@ public class MainActivity extends AppCompatActivity implements
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
         // Checks if Bluetooth is supported on the device.
-<<<<<<< HEAD
-        if (mBluetoothAdapter == null) {
-            Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-        //Button click callbacks
-=======
+
+
         // commented out to work with emulator
         //if (mBluetoothAdapter == null) {
         //    Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
@@ -148,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
-
+*/
 
         mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
@@ -164,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements
                 else{
                     mPlayPauseButton.setImageResource(R.drawable.play_button);
                     mCurrentImageID = R.drawable.play_button;
+                    mPlayer.pause();
                 }
             }
         });
