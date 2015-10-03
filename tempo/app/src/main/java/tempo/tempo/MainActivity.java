@@ -61,13 +61,13 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity implements
         PlayerNotificationCallback, ConnectionStateCallback {
 
-//    private ImageButton mPrevButton;
-  //  private ImageButton mPlayPauseButton;
+    private ImageButton mPrevButton;
+    private ImageButton mPlayPauseButton;
     private int mCurrentImageID;
- //   private ImageButton mNextButton;
+    private ImageButton mNextButton;
     private Button mRestButton;
 
-//    private Button mHamButton;
+    private Button mHamButton;
 
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
@@ -128,8 +128,7 @@ public class MainActivity extends AppCompatActivity implements
             finish();
             return;
         }
-
- /*       Button click callbacks
+        //Button click callbacks
         mPrevButton = (ImageButton) findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
-  */
 
-   /*     mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
+
+        mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
         mCurrentImageID = R.drawable.play_button;
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (mCurrentImageID == R.drawable.play_button){
                     mPlayPauseButton.setImageResource(R.drawable.pause_button);
                     mCurrentImageID = R.drawable.pause_button;
+                    mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
                 }
                 else{
                     mPlayPauseButton.setImageResource(R.drawable.play_button);
@@ -162,10 +162,10 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
 
             }
-        }); */
+        });
 
         mRestButton = (Button) findViewById(R.id.rest_button);
-        //mHamButton = (Button) findViewById(R.id.ham_button);
+
     }
 
     @Override
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements
                         public void onInitialized(Player player) {
                             mPlayer.addConnectionStateCallback(MainActivity.this);
                             mPlayer.addPlayerNotificationCallback(MainActivity.this);
-                            mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
+                            //mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
                         }
 
                         @Override
