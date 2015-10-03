@@ -33,10 +33,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,6 +55,7 @@ import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements
@@ -351,10 +356,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
-    public class AsynchronousNetworkTask extends AsyncTask<String, Void, JSONObject> {
+    public class AsynchronousNetworkTask extends AsyncTask<String, Void, Double> {
 
         @Override
-        protected JSONObject doInBackground(String... params) {
+        protected Double doInBackground(String... params) {
             String artist = params[0];
             String song = params[1];
 
@@ -379,19 +384,42 @@ public class MainActivity extends AppCompatActivity implements
 
             url.substring(0, url.length() - 3);
 
-            URL songInfoUrl = null;
+            String songID = null;
             try{
-                songInfoUrl = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) songInfoUrl.openConnection();
+                songID = readJsonFromUrl(url).getJSONObject("response").getJSONArray("songs").optJSONObject(0).getString("id");
             }
-            catch(MalformedURLException e){
-
-            }
-            catch(IOException e){
-
+            catch(Exception e){
+                Log.d(TAG, "Problem getting song info");
             }
 
+            String urlForTempo = "http://developer.echonest.com/api/v4/song/profile?api_key=B8YFO8YFTNJITHGWH&id=" + songID + "&bucket=audio_summary";
 
+            String songTempo = null;
+            try{
+                songTempo = readJsonFromUrl(url).getJSONObject("response").getJSONArray("songs").optJSONObject(0).getJSONObject("audio_summary").getString("id");
+            }
+            catch(Exception e){
+                Log.d(TAG, "Problem getting song tempo");
+            }
+
+            return Double.parseDouble(songTempo);
+
+        }
+
+    }
+
+    protected static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        try {
+            Scanner rd = new Scanner(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String jsonText = null;
+            while(rd.hasNextLine()){
+                jsonText = rd.nextLine();
+            }
+            JSONObject json = new JSONObject(jsonText);
+            return json;
+        } finally {
+            is.close();
         }
     }
 
