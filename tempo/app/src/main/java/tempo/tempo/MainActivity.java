@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 */
+        final boolean[] isPlaying = {false};
 
         mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
@@ -156,7 +157,13 @@ public class MainActivity extends AppCompatActivity implements
                 if (mCurrentImageID == R.drawable.play_button){
                     mPlayPauseButton.setImageResource(R.drawable.pause_button);
                     mCurrentImageID = R.drawable.pause_button;
-                    mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
+                    if (isPlaying[0]) {
+                        mPlayer.resume();
+                    }
+                    else{
+                        mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
+                        isPlaying[0] = true;
+                    }
                 }
                 else{
                     mPlayPauseButton.setImageResource(R.drawable.play_button);
@@ -220,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements
                         public void onInitialized(Player player) {
                             mPlayer.addConnectionStateCallback(MainActivity.this);
                             mPlayer.addPlayerNotificationCallback(MainActivity.this);
-                            //mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
                         }
 
                         @Override
