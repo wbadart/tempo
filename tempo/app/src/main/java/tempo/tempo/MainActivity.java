@@ -5,18 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mStartButton;
-    private Button mRestButton;
-    private Button mHamButton;
-
     private ImageButton mPrevButton;
     private ImageButton mPlayPauseButton;
+    private int mCurrentImageID;
     private ImageButton mNextButton;
 
     private SeekBar mIntensityBar;
@@ -27,6 +25,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mPrevButton = (ImageButton) findViewById(R.id.prev_button);
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
+        mPlayPauseButton.setImageResource(R.drawable.play_button);
+        mCurrentImageID = R.drawable.play_button;
+        mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentImageID == R.drawable.play_button){
+                    mPlayPauseButton.setImageResource(R.drawable.pause_button);
+                    mCurrentImageID = R.drawable.pause_button;
+                }
+                else{
+                    mPlayPauseButton.setImageResource(R.drawable.play_button);
+                    mCurrentImageID = R.drawable.play_button;
+                }
+            }
+        });
+
+        mNextButton = (ImageButton) findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
