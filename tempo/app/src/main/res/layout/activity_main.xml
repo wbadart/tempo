@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tempo"
+        android:layout_gravity="center_horizontal"
+        android:textSize="32sp"
+        android:layout_marginTop="50px"
+        android:layout_marginBottom="50px"
+        />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/rest_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rest"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/ham_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="H.A.M."
+        android:layout_gravity="center_horizontal"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        />
+
+</LinearLayout>
