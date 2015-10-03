@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private int mCurrentImageID;
     private ImageButton mNextButton;
     private Button mRestButton;
-
     private SeekBar mIntensityBar;
+    private String mSpotifyAccessToken;
 
     // Request code will be used to verify if result comes from the login activity. Can be set to any integer.
     private static final String CLIENT_ID = "4add93ad663a46ab91b0ef8f00ef68d8"; //ClientId goes here
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 // Response was successful and contains auth token
                 case TOKEN:
                     // Handle successful response
+                    mSpotifyAccessToken = response.getAccessToken();
                     break;
 
                 // Auth flow returned an error
