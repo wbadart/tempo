@@ -34,9 +34,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -94,7 +97,9 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new HttpPostExample().execute();
         Log.d("MainActivity", "Authenticating..");
+
         //Handle Spotify authentication
         AuthenticationRequest.Builder builder =
                 new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
@@ -410,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements
             return Double.parseDouble(songTempo);
 
         }
-        
+
     }
 
     public class EchoNestWithSpotify extends AsyncTask<String, Void, Double> {
@@ -430,6 +435,31 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             return Double.parseDouble(songTempo);
+
+        }
+
+    }
+
+    public class HttpPostExample extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+
+            try{
+                URL url = new URL("52.89.129.24:80");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                OutputStream os = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(4);
+                connection.connect();
+                Log.d(TAG, "Example works");
+            }
+            catch(Exception e){
+
+            }
+
+            return 0;
 
         }
 
