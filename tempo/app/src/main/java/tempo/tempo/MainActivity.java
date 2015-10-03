@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
 
+    private static final String TAG = "MainActivity.java: ";
+
     // Request code will be used to verify if result comes from the login activity. Can be set to any integer.
     private static final String CLIENT_ID = "4add93ad663a46ab91b0ef8f00ef68d8"; //ClientId goes here
     private static final int REQUEST_CODE = 6203;
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 case TOKEN:
                     // Handle successful response
                     mSpotifyAccessToken = response.getAccessToken();
+                    Log.d(TAG, mSpotifyAccessToken);
                     break;
 
                 // Auth flow returned an error
