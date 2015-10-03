@@ -34,9 +34,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         Log.d("MainActivity", "Authenticating..");
+
         //Handle Spotify authentication
         AuthenticationRequest.Builder builder =
                 new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
@@ -405,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements
             return Double.parseDouble(songTempo);
 
         }
-        
+
     }
 
     public class EchoNestWithSpotify extends AsyncTask<String, Void, Double> {
