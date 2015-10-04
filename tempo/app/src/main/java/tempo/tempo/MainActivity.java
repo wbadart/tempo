@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new getSongID().execute();
         Log.d("MainActivity", "Authenticating..");
 
         //Handle Spotify authentication
@@ -112,11 +111,17 @@ public class MainActivity extends AppCompatActivity implements
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mPlayer.skipToNext();
             }
         });
 
         mRestButton = (Button) findViewById(R.id.rest_button);
+        mRestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -325,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write("Hello World");
+                writer.write("135");
                 writer.flush();
                 Log.d(TAG, "Example works");
 
@@ -349,6 +354,10 @@ public class MainActivity extends AppCompatActivity implements
 
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            mPlayer.play(s);
+        }
     }
 
     protected static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
