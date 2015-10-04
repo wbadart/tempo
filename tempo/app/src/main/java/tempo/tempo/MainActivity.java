@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new HttpPostExample().execute();
+        new getSongID().execute();
         Log.d("MainActivity", "Authenticating..");
 
         //Handle Spotify authentication
@@ -225,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements
                 case TOKEN:
                     // Handle successful response
                     mSpotifyAccessToken = response.getAccessToken();
-                    Log.d(TAG, mSpotifyAccessToken);
 
                     Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
                     mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
@@ -451,11 +450,12 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    public class HttpPostExample extends AsyncTask<Void, Void, Integer> {
+    public class getSongID extends AsyncTask<Void, Void, String> {
 
         @Override
-        protected Integer doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
 
+            String response = "";
             try{
                 URL url = new URL("http://52.89.129.24:80");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -465,14 +465,27 @@ public class MainActivity extends AppCompatActivity implements
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write(4);
+                writer.write("Hello World");
+                writer.flush();
                 Log.d(TAG, "Example works");
+
+                BufferedReader rd = null;
+
+
+                InputStream is = connection.getInputStream();
+                rd = new BufferedReader(new InputStreamReader(is));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    // Process line...
+                    response += line;
+                }
+                Log.d(TAG, "Response: " + response);
             }
             catch(Exception e){
-                Log.d(TAG, e.getMessage());
+                Log.d(TAG, "Buffer Error");
             }
 
-            return 0;
+            return response;
 
         }
 
