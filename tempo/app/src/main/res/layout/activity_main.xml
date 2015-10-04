@@ -40,6 +40,7 @@
     </LinearLayout>
 
     <SeekBar
+        android:id="@+id/intensity_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50px"
@@ -62,5 +63,12 @@
         android:text="Get BLE"
         android:layout_gravity="center_horizontal|bottom"
         android:onClick="getBLE" />
+
+    <CheckBox
+        android:id="@+id/disable_bluetooth_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Disable Bluetooth"/>
 
 </LinearLayout>

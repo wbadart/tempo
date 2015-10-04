@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 
 import java.io.BufferedReader;
@@ -51,10 +52,14 @@ public class MainActivity extends AppCompatActivity implements
     private ImageButton mNextButton;
     private Button mRestButton;
     private AudioManager myAudioManager;
+    private Button mDisableBluetoothButton;
+    private SeekBar mSlider;
+    private int mSliderValue;
 
     private Boolean isPlaying = false;
     private Boolean hasPlayed = false;
     private Boolean isResting = false;
+    private Boolean isUsingBluetooth = true;
 
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
@@ -128,7 +133,12 @@ public class MainActivity extends AppCompatActivity implements
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new getSongID().execute("130");
+                if (isUsingBluetooth){
+                    new getSongID().execute("60");
+                }
+                else{
+                    new getSongID().execute("" + (mSliderValue + 80));
+                }
                 mPlayPauseButton.setImageResource(R.drawable.pause_button);
                 isPlaying = true;
             }
@@ -141,6 +151,40 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 mRestButton.setEnabled(false);
                 new rest().execute();
+            }
+        });
+
+        mSlider = (SeekBar) findViewById(R.id.intensity_bar);
+        mSlider.setEnabled(false);
+        mSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mSliderValue = mSlider.getProgress();
+            }
+        });
+
+        mDisableBluetoothButton =  (Button) findViewById(R.id.disable_bluetooth_button);
+        mDisableBluetoothButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isUsingBluetooth){
+                    isUsingBluetooth = false;
+                    mSlider.setEnabled(true);
+                }
+                else{
+                    isUsingBluetooth = true;
+                    mSlider.setEnabled(false);
+                }
             }
         });
 
@@ -362,9 +406,12 @@ public class MainActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(String s) {
-            //s = "spotify:track:" + s;
-            Log.d(TAG,s);
-            playSong(s);
+            if (!s.equals("-1")){
+                mPlayer.play(s);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Please wait and then retry", Toast.LENGTH_SHORT);
+            }
         }
     }
 
@@ -407,10 +454,6 @@ public class MainActivity extends AppCompatActivity implements
             mRestButton.setEnabled(true);
             isResting = false;
         }
-    }
-
-    public void playSong(String id){
-        mPlayer.play(id);
     }
 
     protected static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
