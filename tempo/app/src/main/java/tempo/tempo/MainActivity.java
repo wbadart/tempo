@@ -460,7 +460,7 @@ public class MainActivity extends AppCompatActivity implements
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write("Hello World");
+                writer.write("98");
                 writer.flush();
                 Log.d(TAG, "Example works");
 
