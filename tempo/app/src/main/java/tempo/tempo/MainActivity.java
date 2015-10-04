@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 if(firstPlay){
-                    isPlaying = true;
+                    new getSongID().execute("130");
                     firstPlay = false;
                 }else {
                     if (!isPlaying) {
@@ -406,6 +406,7 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String s) {
             if (!s.equals("-1")){
+                //if(firstPlay
                 mPlayer.play(s);
             }
             else{
