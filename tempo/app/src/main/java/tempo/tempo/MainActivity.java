@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements
     private ImageButton mNextButton;
     private Button mRestButton;
 
+    private Boolean isPlaying = false;
+    private Boolean hasPlayed = false;
+
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
 
@@ -80,29 +83,29 @@ public class MainActivity extends AppCompatActivity implements
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
 
 
-        final boolean[] isPlaying = {false};
-
         mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
         mCurrentImageID = R.drawable.play_button;
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentImageID == R.drawable.play_button){
+                if (!isPlaying){
                     mPlayPauseButton.setImageResource(R.drawable.pause_button);
                     mCurrentImageID = R.drawable.pause_button;
-                    if (isPlaying[0]) {
+                    if (hasPlayed) {
                         mPlayer.resume();
                     }
                     else{
-                        mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
-                        isPlaying[0] = true;
+                        new getSongID().execute("130");
+                        isPlaying = true;
+                        hasPlayed = true;
                     }
                 }
                 else{
                     mPlayPauseButton.setImageResource(R.drawable.play_button);
                     mCurrentImageID = R.drawable.play_button;
                     mPlayer.pause();
+                    isPlaying = false;
                 }
             }
         });
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPlayer.skipToNext();
+                new getSongID().execute("130");
             }
         });
 
@@ -315,11 +318,12 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    public class getSongID extends AsyncTask<Void, Void, String> {
+    public class getSongID extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
 
+            String heartRate = params[0];
             String response = "";
             try{
                 URL url = new URL("http://52.89.129.24:80");
@@ -330,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write("135");
+                writer.write(heartRate);
                 writer.flush();
                 Log.d(TAG, "Example works");
 
@@ -345,6 +349,11 @@ public class MainActivity extends AppCompatActivity implements
                     response += line;
                 }
                 Log.d(TAG, "Response: " + response);
+
+                rd.close();
+                is.close();
+                writer.close();
+                os.close();
             }
             catch(Exception e){
                 Log.d(TAG, "Buffer Error");
