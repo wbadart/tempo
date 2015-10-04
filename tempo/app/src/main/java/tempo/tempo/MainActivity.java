@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements
 
     private ImageButton mPrevButton;
     private ImageButton mPlayPauseButton;
-    private int mCurrentImageID;
     private ImageButton mNextButton;
     private Button mRestButton;
 
@@ -85,13 +84,11 @@ public class MainActivity extends AppCompatActivity implements
 
         mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
-        mCurrentImageID = R.drawable.play_button;
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isPlaying){
                     mPlayPauseButton.setImageResource(R.drawable.pause_button);
-                    mCurrentImageID = R.drawable.pause_button;
                     if (hasPlayed) {
                         mPlayer.resume();
                         isPlaying = true;
@@ -104,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 else{
                     mPlayPauseButton.setImageResource(R.drawable.play_button);
-                    mCurrentImageID = R.drawable.play_button;
                     mPlayer.pause();
                     isPlaying = false;
                 }
@@ -116,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 new getSongID().execute("130");
+                mPlayPauseButton.setImageResource(R.drawable.pause_button);
+                isPlaying = true;
             }
         });
 
