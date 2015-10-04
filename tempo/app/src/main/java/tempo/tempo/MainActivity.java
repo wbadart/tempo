@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements
                 mPlayer.play(s);
             }
             else{
-                Toast.makeText(getApplicationContext(), "Please wait and then retry", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), "Please wait and then retry", Toast.LENGTH_SHORT).show();
             }
         }
     }
