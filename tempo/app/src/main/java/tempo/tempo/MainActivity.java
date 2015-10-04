@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new getSongID().execute();
         Log.d("MainActivity", "Authenticating..");
 
         //Handle Spotify authentication
@@ -460,7 +459,7 @@ public class MainActivity extends AppCompatActivity implements
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write("Hello World");
+                writer.write("135");
                 writer.flush();
                 Log.d(TAG, "Example works");
 
