@@ -1,0 +1,44 @@
+var http = require('http');
+
+var server = http.createServer(function(request, response){
+	var form_response = function(msg){
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.writeHead(200, {"Content-Type":"text/plain"});
+		response.write(msg);
+		response.end();
+	};
+	request.on('readable', function(){
+		var input = request.read().toString();
+		console.log("POST Request @" + new Date().toString() + ": " + input);
+		var req = "/api/v4/song/search?api_key=B8YFO8YFTNJITHGWH&format=json&bucket=id:spotify&max_tempo=";
+		var min = parseInt(input, 10) - 5;
+		var max = parseInt(input, 10) + 5;
+		req += max.toString() + "&min_tempo=" + min.toString();
+		
+		http.get({
+			host:'developer.echonest.com',
+			path:"/api/v4/song/search?api_key=B8YFO8YFTNJITHGWH&max_tempo=80&min_tempo=70&format=json",
+		}, function(res){
+			res.on('readable', function(){
+				var data = res.toString();
+				console.log(data.toString());
+				var result = data.response;
+				console.log(result);/*
+				if(result.status.code || result.songs.length <= 0){
+					var msg = "ErrNo " + result.status.code.toString() + ": " + result.status.message;
+					form_response(msg);
+					console.log("\tResponse: " + msg);
+					return;
+				}else{
+					var list = result.songs;
+					var i = Math.floor(Math.random() * list.length);
+					var song_id = list[i].id;
+					console.log("\tResponse: " + song_id);
+					form_response(song_id);
+					return;
+				}*/
+			});
+			res.on('end', function(){console.log("\tResonse over");});
+		});
+	});
+}).listen(80);

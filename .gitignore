@@ -1,5 +1,7 @@
-tempo/.idea/misc.xml
-tempo/.idea/gradle.xml
-temp0/.idea/misc.xml
-tempo/app/app.iml
-tempo/tempo.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
