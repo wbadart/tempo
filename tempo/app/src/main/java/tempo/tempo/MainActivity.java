@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private Player mPlayer;
 
+    //public final String firstURL = new getSongID().execute("130");
+    //public final Boolean firstPlay = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,27 +95,31 @@ public class MainActivity extends AppCompatActivity implements
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isPlaying){
-                    mPlayPauseButton.setImageResource(R.drawable.pause_button);
-                    if (!isResting){
-                        mRestButton.setEnabled(true);
+                if(false){
+                    /*mPlayer.play(firstURL);
+                    isPlaying = true;
+                    firstPlay = false;*/
+                }else {
+                    if (!isPlaying) {
+                        mPlayPauseButton.setImageResource(R.drawable.pause_button);
+                        if (!isResting) {
+                            mRestButton.setEnabled(true);
+                        }
+                        if (hasPlayed) {
+                            mPlayer.resume();
+                            isPlaying = true;
+                        } else {
+                            //new getSongID().execute("130");
+                            mPlayer.play("spotify:track:2EQhNdnP2LT96NnkkKkm0N");
+                            isPlaying = true;
+                            hasPlayed = true;
+                        }
+                    } else {
+                        mPlayPauseButton.setImageResource(R.drawable.play_button);
+                        mRestButton.setEnabled(false);
+                        mPlayer.pause();
+                        isPlaying = false;
                     }
-                    if (hasPlayed) {
-                        mPlayer.resume();
-                        isPlaying = true;
-                    }
-                    else{
-                        //new getSongID().execute("130");
-                        mPlayer.play("spotify:track:2EQhNdnP2LT96NnkkKkm0N");
-                        isPlaying = true;
-                        hasPlayed = true;
-                    }
-                }
-                else{
-                    mPlayPauseButton.setImageResource(R.drawable.play_button);
-                    mRestButton.setEnabled(false);
-                    mPlayer.pause();
-                    isPlaying = false;
                 }
             }
         });
@@ -355,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(String s) {
-            s = "spotify:track:" + s;
+            //s = "spotify:track:" + s;
             Log.d(TAG,s);
             playSong(s);
         }
