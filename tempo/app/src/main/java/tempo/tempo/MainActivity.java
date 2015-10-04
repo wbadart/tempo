@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("MainActivity", "Authenticating..");
+        Log.d(TAG, "OnCreate called");
 
         //Handle Spotify authentication
         AuthenticationRequest.Builder builder =
@@ -384,6 +384,7 @@ public class MainActivity extends AppCompatActivity implements
         AuthenticationRequest request = builder.build();
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+        hasPlayed = false;
         Log.d(TAG, "Logged Out");
     }
 
