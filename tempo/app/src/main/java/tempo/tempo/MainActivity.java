@@ -96,16 +96,14 @@ public class MainActivity extends AppCompatActivity implements
 
         myAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
+        mTitleText = (TextView) findViewById(R.id.title_text);
 
         mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(firstPlay){
-                    new getSongID().execute("130");
-                    firstPlay = false;
-                }else {
+
                     if (!isPlaying) {
                         mPlayPauseButton.setImageResource(R.drawable.pause_button);
                         if (!isResting) {
@@ -115,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements
                             mPlayer.resume();
                             isPlaying = true;
                         } else {
-                            //new getSongID().execute("130");
-                            mPlayer.play("spotify:track:2EQhNdnP2LT96NnkkKkm0N");
+                            new getSongID().execute("130");
+                            //mPlayer.play("spotify:track:2EQhNdnP2LT96NnkkKkm0N");
                             isPlaying = true;
                             hasPlayed = true;
                         }
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements
                         mPlayer.pause();
                         isPlaying = false;
                     }
-                }
+                
             }
         });
 
@@ -411,11 +409,12 @@ public class MainActivity extends AppCompatActivity implements
 
                 Scanner scan = new Scanner(s);
                 String id = scan.next();
+                Log.d(TAG, id);
                 mPlayer.play(id);
 
                 String title = "";
                 while (scan.hasNext()){
-                    title = title + scan.next();
+                    title = title + scan.next() + " ";
                 }
 
                 mTitleText.setText(title);
