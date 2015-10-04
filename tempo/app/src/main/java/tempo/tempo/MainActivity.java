@@ -334,6 +334,7 @@ public class MainActivity extends AppCompatActivity implements
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
+
                 writer.write(heartRate);
                 writer.flush();
                 Log.d(TAG, "Example works");
@@ -365,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(String s) {
-            mPlayer.play(s);
+            mPlayer.play("spotify:track:" + s);
         }
     }
 
