@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements
                     }
                     else{
                         new getSongID().execute("130");
+                        mPlayer.play("spotify:track:2EQhNdnP2LT96NnkkKkm0N");
                         isPlaying = true;
                         hasPlayed = true;
                     }
@@ -280,28 +281,6 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             String urlForTempo = "http://developer.echonest.com/api/v4/song/profile?api_key=B8YFO8YFTNJITHGWH&id=" + songID + "&bucket=audio_summary";
-
-            String songTempo = null;
-            try{
-                songTempo = readJsonFromUrl(urlForTempo).getJSONObject("response").getJSONArray("songs").optJSONObject(0).getJSONObject("audio_summary").getString("id");
-            }
-            catch(Exception e){
-                Log.d(TAG, "Problem getting song tempo");
-            }
-
-            return Double.parseDouble(songTempo);
-
-        }
-
-    }
-
-    public class EchoNestWithSpotify extends AsyncTask<String, Void, Double> {
-
-        @Override
-        protected Double doInBackground(String... params) {
-            String id = params[0];
-
-            String urlForTempo = "http://developer.echonest.com/api/v4/song/profile?api_key=B8YFO8YFTNJITHGWH&id=" + id + "&bucket=audio_summary";
 
             String songTempo = null;
             try{
