@@ -346,12 +346,8 @@ public class MainActivity extends AppCompatActivity implements
         protected void onPostExecute(String s) {
             s = "spotify:track:" + s;
             Log.d(TAG,s);
-            playSong(s);
+            mPlayer.play(s);
         }
-    }
-
-    public void playSong(String id){
-        mPlayer.play(id);
     }
 
     protected static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
