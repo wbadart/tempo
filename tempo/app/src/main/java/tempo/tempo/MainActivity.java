@@ -365,6 +365,7 @@ public class MainActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(String s) {
+            Log.d(TAG,s);
             mPlayer.play("spotify:track:" + s);
         }
     }
