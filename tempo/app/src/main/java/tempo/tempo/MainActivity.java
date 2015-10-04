@@ -370,4 +370,8 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(intent);
     }
 
+    private void logout(){
+        AuthenticationClient.logout(this);
+    }
+
 }
