@@ -136,16 +136,15 @@ public class MainActivity extends AppCompatActivity implements
         //    return;
         //}
 
- /*       Button click callbacks
->>>>>>> b34aba974023818799e62cffa49ee9b9ee2f7335
+        //Button click callbacks
         mPrevButton = (ImageButton) findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mPlayer.skipToPrevious();
             }
         });
-*/
+
         final boolean[] isPlaying = {false};
 
         mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
@@ -177,11 +176,17 @@ public class MainActivity extends AppCompatActivity implements
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mPlayer.skipToNext();
             }
         });
 
         mRestButton = (Button) findViewById(R.id.rest_button);
+        mRestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
