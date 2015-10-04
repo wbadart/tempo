@@ -10,5 +10,5 @@
           android:title="logout"
           android:orderInCategory="101"
           app:showAsAction="ifRoom"
-          android:onClick="logout()"/>
+          android:onClick="logout"/>
 </menu>

@@ -374,8 +374,17 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(intent);
     }
 
-    private void logout(){
-        AuthenticationClient.logout(this);
+    public void logout(MenuItem menuItem){
+        AuthenticationClient.logout(getApplicationContext());
+
+        AuthenticationRequest.Builder builder =
+                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+
+        builder.setScopes(new String[]{"user-read-private", "streaming"});
+        AuthenticationRequest request = builder.build();
+
+        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+        Log.d(TAG, "Logged Out");
     }
 
 }
