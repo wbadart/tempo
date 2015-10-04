@@ -1,6 +1,8 @@
 package tempo.tempo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -45,13 +47,14 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity implements
         PlayerNotificationCallback, ConnectionStateCallback {
 
-    private ImageButton mPrevButton;
     private ImageButton mPlayPauseButton;
     private ImageButton mNextButton;
     private Button mRestButton;
+    private AudioManager myAudioManager;
 
     private Boolean isPlaying = false;
     private Boolean hasPlayed = false;
+    private Boolean isResting = false;
 
     private SeekBar mIntensityBar;
     private String mSpotifyAccessToken;
@@ -81,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
 
+        myAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
 
         mPlayPauseButton = (ImageButton) findViewById(R.id.play_pause_button);
         mPlayPauseButton.setImageResource(R.drawable.play_button);
@@ -89,12 +94,15 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (!isPlaying){
                     mPlayPauseButton.setImageResource(R.drawable.pause_button);
+                    if (!isResting){
+                        mRestButton.setEnabled(true);
+                    }
                     if (hasPlayed) {
                         mPlayer.resume();
                         isPlaying = true;
                     }
                     else{
-                        new getSongID().execute("130");
+                        //new getSongID().execute("130");
                         mPlayer.play("spotify:track:2EQhNdnP2LT96NnkkKkm0N");
                         isPlaying = true;
                         hasPlayed = true;
@@ -102,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 else{
                     mPlayPauseButton.setImageResource(R.drawable.play_button);
+                    mRestButton.setEnabled(false);
                     mPlayer.pause();
                     isPlaying = false;
                 }
@@ -119,10 +128,12 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         mRestButton = (Button) findViewById(R.id.rest_button);
+        mRestButton.setEnabled(false);
         mRestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mRestButton.setEnabled(false);
+                new rest().execute();
             }
         });
 
@@ -347,6 +358,47 @@ public class MainActivity extends AppCompatActivity implements
             s = "spotify:track:" + s;
             Log.d(TAG,s);
             playSong(s);
+        }
+    }
+
+    public class rest extends AsyncTask<Void, Void, Integer>{
+        @Override
+        protected Integer doInBackground(Void... params) {
+
+            int streamVolume = myAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, streamVolume / 2, AudioManager.FLAG_SHOW_UI);
+            isResting = true;
+            try {
+                Thread.sleep(60000, 0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, streamVolume/2, 0);
+
+            int iterationVolume = streamVolume / 10;
+            if (iterationVolume <= 0){
+                iterationVolume = 1;
+            }
+
+            for (int i = (streamVolume/2); i < streamVolume; i = i + iterationVolume){
+                try {
+                    Log.d(TAG, "" + i);
+                    myAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
+                    Thread.sleep(500, 0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return 0;
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            mRestButton.setEnabled(true);
+            isResting = false;
         }
     }
 

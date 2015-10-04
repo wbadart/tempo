@@ -21,12 +21,6 @@
                     android:layout_gravity="center_horizontal"
                     android:paddingTop="50px">
 
-        <ImageButton
-            android:id="@+id/prev_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/prev_button"/>
 
         <ImageButton
             android:id="@+id/play_pause_button"
