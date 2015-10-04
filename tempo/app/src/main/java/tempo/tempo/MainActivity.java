@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements
                     }
                     else{
                         new getSongID().execute("130");
+                        mPlayer.play("spotify:track:2EQhNdnP2LT96NnkkKkm0N");
                         isPlaying = true;
                         hasPlayed = true;
                     }
