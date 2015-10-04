@@ -488,6 +488,10 @@ public class MainActivity extends AppCompatActivity implements
 
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            mPlayer.play(s);
+        }
     }
 
     protected static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
