@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements
     private Player mPlayer;
 
     //public final String firstURL = new getSongID().execute("130");
-    //public final Boolean firstPlay = true;
+    public Boolean firstPlay = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +100,9 @@ public class MainActivity extends AppCompatActivity implements
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(false){
-                    /*mPlayer.play(firstURL);
+                if(firstPlay){
                     isPlaying = true;
-                    firstPlay = false;*/
+                    firstPlay = false;
                 }else {
                     if (!isPlaying) {
                         mPlayPauseButton.setImageResource(R.drawable.pause_button);
