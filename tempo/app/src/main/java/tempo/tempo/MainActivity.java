@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements
     private Button mDisableBluetoothButton;
     private SeekBar mSlider;
     private int mSliderValue;
+    private TextView mTitleText;
 
     private Boolean isPlaying = false;
     private Boolean hasPlayed = false;
@@ -406,8 +408,18 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String s) {
             if (!s.equals("-1")){
-                //if(firstPlay
-                mPlayer.play(s);
+
+                Scanner scan = new Scanner(s);
+                String id = scan.next();
+                mPlayer.play(id);
+
+                String title = "";
+                while (scan.hasNext()){
+                    title = title + scan.next();
+                }
+
+                mTitleText.setText(title);
+
             }
             else{
                 Toast.makeText(getApplicationContext(), "Please wait and then retry", Toast.LENGTH_SHORT).show();
