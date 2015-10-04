@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements
                     mCurrentImageID = R.drawable.pause_button;
                     if (hasPlayed) {
                         mPlayer.resume();
+                        isPlaying = true;
                     }
                     else{
                         new getSongID().execute("130");
